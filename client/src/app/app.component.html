@@ -1,0 +1,18 @@
+<div class="header">
+  <h1>Incidents' tracking</h1>
+
+  <div class="pills">
+    <a class="link" (click)="logout()" href="#" *ngIf="auth.loggedIn">Logout</a>
+  </div>
+</div>
+
+<div class="space"></div>
+
+<div class="container-fluid">
+  <div class="tabs">
+    <a class="link" id="incidents" routerLink="incidents" routerLinkActive="active" *ngIf="auth.loggedIn">Incidents</a>
+    <a class="link" id="process" routerLink="process" routerLinkActive="active" *ngIf="auth.loggedIn">Process</a>
+    <a class="link" id="users" routerLink="users" routerLinkActive="active" *ngIf="auth.loggedIn">Users</a>
+  </div>
+  <router-outlet></router-outlet>
+</div>

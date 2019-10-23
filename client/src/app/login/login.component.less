@@ -1,0 +1,73 @@
+@shadow-gray-color: rgb(124, 132, 145);
+@items-white-color: white;
+@text-color: rgb(64, 68, 77);
+@background-color: rgba(241, 244, 255, 0.64);
+@disabled-color: rgba(169, 172, 182, 0.64);
+
+form {
+  width: 250px;
+  margin: 40px auto 15px auto;
+  padding: 20px;
+
+  color: @text-color;
+  background-color: @items-white-color;
+  box-shadow: 0.2em 0.2em 5px @shadow-gray-color;
+
+  border: 1.5px solid @shadow-gray-color;
+  border-radius: 10px;
+
+  text-align: center;
+
+  h3 {
+    margin-top: 15px;
+    padding-bottom: 10px;
+
+    border-bottom: 1.5px solid @shadow-gray-color;
+
+    font-size: 20pt;
+  }
+
+  .error {
+    width: 100%;
+    margin: 5px 0;
+
+    color: red;
+    text-align: center;
+    font-size: 15pt;
+  }
+
+  .form-group, .submit-but {
+    margin: 25px auto;
+
+    label, input, button {
+      font-size: 15pt;
+    }
+
+    input {
+      margin: 5px;
+      padding: 5px 7px;
+
+      background-color: @background-color;
+
+      border: 1.5px solid @shadow-gray-color;
+      border-radius: 10px;
+    }
+
+    button {
+      padding: 7px 20px;
+
+      color: @text-color;
+      background-color: @background-color;
+
+      border: 1.5px solid @shadow-gray-color;
+      border-radius: 10px;
+    }
+
+    button:disabled {
+      color: @disabled-color;
+      background-color: @items-white-color;
+
+      border: 1.5px solid @disabled-color;
+    }
+  }
+}
