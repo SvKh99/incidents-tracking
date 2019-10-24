@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './auth.guard';
 
-import { LoginComponent } from './login/login.component';
-import { IncidentsComponent } from './incidents/incidents.component';
-import { ProcessComponent } from './process/process.component';
-import { UsersComponent } from './users/users.component';
+import { AuthGuard } from './services/auth.guard';
+
+import { LoginComponent } from './components/login/login.component';
+import { IncidentsComponent } from './components/incidents/incidents.component';
+import { ProcessComponent } from './components/process/process.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   { path: 'incidents', component: IncidentsComponent, canActivate: [AuthGuard] },
