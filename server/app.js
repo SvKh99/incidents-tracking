@@ -10,7 +10,7 @@ const addUser = require('./addUser');
 
 
 app.use(bodyParser.json());
-app.use(expressJwt({ secret: 'accessKey' }).unless({ path: ['/api/auth', '/api/reg'] }));
+app.use(expressJwt({ secret: 'accessKey' }).unless({ path: ['/api/auth'] }));
 
 app.get('/', function (req, res) {
     res.send('Angular Netcracker App API Server')
@@ -18,46 +18,64 @@ app.get('/', function (req, res) {
 
 app.post('/api/auth', (req, res) => {
     const body = req.body;
-    console.log(body);
 
     getUsers.getUsersFunc(function (items) {
-        console.log(items);
         const user = items.find(user => user.username === body.username);
 
         if (!user) {
             return res.send({ error: 'Could not authenticate: there is no user with this name!' });
         }
-        console.log(md5(body.password));
         if (!user || md5(body.password) !== user.password) return res.send({ error: 'Could not authenticate: password is incorrect!' });
-        console.log({ username: user.username });
         let token = jwt.sign({ username: user.username }, 'accessKey', { expiresIn: '2h' });
-        console.log(token);
 
         res.send({ token });
     });
 
 });
 
-app.post('/api/reg', (req, res) => {
+app.get('/api/getUsers', (req, res) => {
+    getUsers.getUsersFunc(function (items) {
+        items.map(user => {
+            delete user.password;
+            delete user._id;
+            // user.birthday = String(user.birthday.getDate()).padStart(2, '0') + '-' + String(user.birthday.getMonth()).padStart(2, '0') + '-' + user.birthday.getFullYear();
+        });
+
+        res.send(items);
+    });
+});
+
+app.post('/api/addUser', (req, res) => {
+    let body = req.body;
+
     getUsers.getUsersFunc(function(items) {
         const user = items.find(user => user.username === body.username);
 
         if(!!user) {
-            return res.send({ error: 'Could not register: user with this name already exists!' });
+            console.log('Could not sign up: user with this name already exists!');
+            return;
         }
 
-        let username = body.username;
         let newUser = {
-            username: username,
+            username: body.username,
             password: md5(body.password),
             birthday: body.birthday,
             position: body.position
         };
 
-        addUser(newUser);
-        let token = jwt.sign({ username: username }, 'accessKey', { expiresIn: '2h' });
+        try {
+            addUser(newUser);
 
-        res.send({ token });
+            items.map(user => {
+                delete user.password;
+                delete user._id;
+            });
+            items.push(newUser)
+        } catch (e) {
+            console.log(e);
+        }
+
+        res.send(items);
     });
 });
 

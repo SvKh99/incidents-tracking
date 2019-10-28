@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './services/auth.guard';
+import { LoginGuard } from './services/login.guard';
 
 import { LoginComponent } from './components/login/login.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
@@ -12,8 +13,8 @@ const routes: Routes = [
   { path: 'incidents', component: IncidentsComponent, canActivate: [AuthGuard] },
   { path: 'process', component: ProcessComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: 'login' }
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: '**', redirectTo: 'users' }
 ];
 
 @NgModule({

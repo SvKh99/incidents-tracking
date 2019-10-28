@@ -6,7 +6,11 @@
 
 
 .content {
-  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  padding: 50px;
   margin-bottom: 25px;
 
   min-height: 65vh;
@@ -18,75 +22,119 @@
   border-right: 1.5px solid @shadow-gray-color;
   border-left: 1.5px solid @shadow-gray-color;
 
-  p {
-    margin: 0;
-  }
-}
+  .table-content {
+    display: inline-block;
+    width: 60%;
 
-form {
-  width: 250px;
-  margin: 40px auto 15px auto;
-  padding: 20px;
+    table {
+      display: table;
 
-  color: @text-color;
-  background-color: @items-white-color;
-  box-shadow: 0.2em 0.2em 5px @shadow-gray-color;
+      width: 100%;
 
-  border: 1.5px solid @shadow-gray-color;
-  border-radius: 10px;
-
-  text-align: center;
-
-  h3 {
-    margin-top: 15px;
-    padding-bottom: 10px;
-
-    border-bottom: 1.5px solid @shadow-gray-color;
-
-    font-size: 20pt;
-  }
-
-  .error {
-    width: 100%;
-    margin: 5px 0;
-
-    color: red;
-    text-align: center;
-    font-size: 15pt;
-  }
-
-  .form-group, .submit-but {
-    margin: 25px auto;
-
-    label, input, button {
-      font-size: 15pt;
-    }
-
-    input {
-      margin: 5px;
-      padding: 5px 7px;
-
-      background-color: @background-color;
-
+      margin: 0 auto;
+      padding: 10px;
       border: 1.5px solid @shadow-gray-color;
       border-radius: 10px;
-    }
+      background-color: @background-color;
+      text-align: center;
 
-    button {
-      padding: 7px 20px;
+      th {
+        padding-bottom: 10px;
+
+        font-size: 13pt;
+      }
+
+      td {
+        border-radius: 5px;
+        background: white;
+      }
+    }
+  }
+
+  .add-user {
+    width: 40%;
+    padding-left: 50px;
+
+    form {
+      width: 250px;
+      margin: 0 auto;
+      padding: 20px;
 
       color: @text-color;
-      background-color: @background-color;
+      background-color: @items-white-color;
+      box-shadow: 0.2em 0.2em 5px @shadow-gray-color;
 
       border: 1.5px solid @shadow-gray-color;
       border-radius: 10px;
-    }
 
-    button:disabled {
-      color: @disabled-color;
-      background-color: @items-white-color;
+      text-align: center;
 
-      border: 1.5px solid @disabled-color;
+      h3 {
+        margin-top: 15px;
+        padding-bottom: 10px;
+
+        font-size: 20pt;
+        font-weight: 900;
+      }
+
+      .error {
+        width: 100%;
+        margin: 5px 0;
+
+        color: red;
+        text-align: center;
+        font-size: 15pt;
+      }
+
+      .error-message {
+        color: red;
+      }
+
+      .form-group, .submit-but {
+        margin: 18px auto;
+
+        input, button {
+          font-size: 15pt;
+        }
+
+        input {
+          width: 80%;
+          margin: 5px;
+          padding: 5px 7px;
+
+          background-color: @background-color;
+
+          border: 1.5px solid @shadow-gray-color;
+          border-radius: 5px;
+        }
+
+        input:invalid {
+          border: 1.5px solid red;
+        }
+
+        button {
+          padding: 7px 20px;
+
+          color: @text-color;
+          background-color: @background-color;
+
+          border: 1.5px solid @shadow-gray-color;
+          border-radius: 5px;
+        }
+
+        button:hover {
+          background-color: @shadow-gray-color;
+          color: @items-white-color;
+        }
+
+        button:disabled {
+          color: @disabled-color;
+          background-color: @items-white-color;
+
+          border: 1.5px solid @disabled-color;
+        }
+      }
     }
   }
 }
+

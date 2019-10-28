@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+
+import { GetUsers, AddUser } from '../../store/actions/user.actions';
+import { AppState } from '../../store/state/app.state';
+import { selectUserList } from '../../store/selectors/user.selector';
 
 @Component({
   selector: 'app-users',
@@ -6,18 +11,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users.component.less']
 })
 export class UsersComponent implements OnInit {
-  constructor() { }
+  @Output()
+  userSelected: EventEmitter<string> = new EventEmitter();
+
+  constructor(private store: Store<AppState>) { }
 
   public error: string;
   public username: string;
   public password: string;
   public birthday: Date;
   public position: string;
+  public users = this.store.pipe(select(selectUserList));
 
   ngOnInit() {
+    this.store.dispatch(new GetUsers());
   }
 
-  public addUser() {
-    alert('В разработке!');
+  public checkName() {
+    if (this.username) {
+      return !/\d/.test(this.username);
+    }
+    return true;
+  }
+
+  public checkPassword() {
+    if (this.password) {
+      return this.password.length >= 4;
+    }
+    return true;
+  }
+
+  public add() {
+    this.store.dispatch(new AddUser(this.username, this.password, this.birthday, this.position));
+    this.username = '';
+    this.password = '';
+    this.birthday = undefined;
+    this.position = '';
   }
 }

@@ -6,7 +6,7 @@
 
 form {
   width: 250px;
-  margin: 40px auto 15px auto;
+  margin: 80px auto 15px auto;
   padding: 20px;
 
   color: @text-color;
@@ -19,12 +19,10 @@ form {
   text-align: center;
 
   h3 {
-    margin-top: 15px;
-    padding-bottom: 10px;
-
-    border-bottom: 1.5px solid @shadow-gray-color;
+    margin-top: 10px;
 
     font-size: 20pt;
+    font-weight: 900;
   }
 
   .error {
@@ -36,21 +34,23 @@ form {
     font-size: 15pt;
   }
 
+
   .form-group, .submit-but {
     margin: 25px auto;
 
-    label, input, button {
+    input, button {
       font-size: 15pt;
     }
 
     input {
+      width: 80%;
       margin: 5px;
       padding: 5px 7px;
 
       background-color: @background-color;
 
       border: 1.5px solid @shadow-gray-color;
-      border-radius: 10px;
+      border-radius: 5px;
     }
 
     button {
@@ -60,7 +60,12 @@ form {
       background-color: @background-color;
 
       border: 1.5px solid @shadow-gray-color;
-      border-radius: 10px;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: @shadow-gray-color;
+      color: @items-white-color;
     }
 
     button:disabled {

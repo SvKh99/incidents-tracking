@@ -13,17 +13,20 @@
 
     background-color: @items-white-color;
     color: @text-color;
-    box-shadow: 0.2em 0.2em 5px @shadow-gray-color;
 
     border-bottom: 1.5px solid @shadow-gray-color;
 
     text-align: center;
+
+    font-family: 'Staatliches', cursive;
+    font-weight: normal;
+    font-size: 25pt;
   }
 
   .pills {
     position: fixed;
     top: 30px;
-    right: 15px;
+    right: 30px;
 
     width: 100px;
 
@@ -35,12 +38,17 @@
       border: 1.5px solid @shadow-gray-color;
       border-radius: 10px;
     }
+
+    .link:hover {
+      background-color: @shadow-gray-color;
+      color: @items-white-color;
+    }
   }
 }
 
 .container-fluid {
-  width: 65%;
-  margin: 0 30px;
+  width: 95%;
+  margin: 0 auto;
 
   .tabs {
     margin-top: 35px;
@@ -78,6 +86,11 @@
   a {
     text-decoration: none;
     color: @text-color;
+  }
+
+  .link {
+    font-size: 13.5pt;
+    font-weight: 900;
   }
 }
 
