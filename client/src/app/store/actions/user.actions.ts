@@ -14,7 +14,8 @@ export class GetUsers implements Action {
 
 export class GetUsersSuccess implements Action {
   public readonly type = EnumUserActions.GetUsersSuccess;
-  constructor(public payload: User[]) {}
+
+  constructor(public users: User[]) {}
 }
 
 export class AddUser implements Action {
@@ -34,19 +35,7 @@ export class AddUser implements Action {
 
 export class AddUserSuccess implements Action {
   public readonly type = EnumUserActions.AddUserSuccess;
-  constructor(public  payload: User[]) {}
+  constructor(public users: User[], public message: string ) {}
 }
-
-/* export class GetUser implements Action {
-  public readonly type = EnumUserActions.GetUser;
-  constructor(public payload: string) {
-  }
-}
-
-export class GetUserSuccess implements Action {
-  public readonly type = EnumUserActions.GetUserSuccess;
-  constructor(public payload: User) {
-  }
-} */
 
 export type UserActions = GetUsers | GetUsersSuccess | AddUser | AddUserSuccess;

@@ -13,12 +13,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { appReducers } from './store/reducers/app.reducers';
 import { UserEffects } from './store/effects/user.effects';
+import { IncidentEffects } from './store/effects/incident.effects';
 
 import { HttpErrorHandler } from './services/http-error-handler.service';
 import { MessageService } from './services/message.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 import { UserService } from './services/user.service';
+import { IncidentService } from './services/incident.service';
 
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
@@ -43,7 +45,7 @@ export function getToken() {
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot(appReducers),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects, IncidentEffects]),
     StoreRouterConnectingModule.forRoot({stateKey: 'root'}),
     JwtModule.forRoot({
       config: {
@@ -59,6 +61,7 @@ export function getToken() {
     HttpErrorHandler,
     MessageService,
     UserService,
+    IncidentService,
   ],
   bootstrap: [AppComponent]
 })

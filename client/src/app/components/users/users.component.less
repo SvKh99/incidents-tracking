@@ -7,11 +7,11 @@
 
 .content {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   justify-content: center;
 
-  padding: 50px;
   margin-bottom: 25px;
+  padding-bottom: 50px;
 
   min-height: 65vh;
 
@@ -24,7 +24,12 @@
 
   .table-content {
     display: inline-block;
-    width: 60%;
+
+    width: 80%;
+    min-width: 220px;
+    max-width: 600px;
+
+    margin: 50px auto 0 auto;
 
     table {
       display: table;
@@ -53,10 +58,13 @@
 
   .add-user {
     width: 40%;
-    padding-left: 50px;
+    min-width: 220px;
+
+    margin-top: 50px;
 
     form {
-      width: 250px;
+      max-width: 250px;
+      min-width: 220px;
       margin: 0 auto;
       padding: 20px;
 

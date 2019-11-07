@@ -11,9 +11,6 @@ import { selectUserList } from '../../store/selectors/user.selector';
   styleUrls: ['./users.component.less']
 })
 export class UsersComponent implements OnInit {
-  @Output()
-  userSelected: EventEmitter<string> = new EventEmitter();
-
   constructor(private store: Store<AppState>) { }
 
   public error: string;
@@ -43,9 +40,9 @@ export class UsersComponent implements OnInit {
 
   public add() {
     this.store.dispatch(new AddUser(this.username, this.password, this.birthday, this.position));
-    this.username = '';
-    this.password = '';
-    this.birthday = undefined;
-    this.position = '';
+    this.username = this.password = this.birthday = this.position = undefined;
+    setTimeout(() => {
+      console.log(this.users);
+    }, 5000);
   }
 }

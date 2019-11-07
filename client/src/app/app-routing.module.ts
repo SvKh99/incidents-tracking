@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'process', component: ProcessComponent, canActivate: [AuthGuard] },
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-  { path: '**', redirectTo: 'users' }
+  { path: '**', redirectTo: 'incidents' }
 ];
 
 @NgModule({

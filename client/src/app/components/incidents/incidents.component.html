@@ -1,5 +1,24 @@
 <div class="content">
-  <p>
-    incidents works!
-  </p>
+  <p>Что есть...</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Assignee</th>
+        <th>Start Date</th>
+        <th>Dur Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let incident of incidents | async">
+        <td>{{ incident.name }}</td>
+        <td>{{ incident.assignee }}</td>
+        <td>{{ incident.startDate }}</td>
+        <td>{{ incident.dueDate }}</td>
+        <td>{{ incident.status }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

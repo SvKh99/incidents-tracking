@@ -52,7 +52,7 @@ app.post('/api/addUser', (req, res) => {
         const user = items.find(user => user.username === body.username);
 
         if(!!user) {
-            console.log('Could not sign up: user with this name already exists!');
+            res.send({ users: items, message: 'Error! User with this name is already existed!' });
             return;
         }
 
@@ -75,8 +75,43 @@ app.post('/api/addUser', (req, res) => {
             console.log(e);
         }
 
-        res.send(items);
+        res.send({ users: items, message: undefined });
     });
+});
+
+app.get('/api/getIncidents', (req, res) => {
+    res.send([
+            {
+                id: 1,
+                name: 'Breakdown of coloring instrument',
+                assignee: '',
+                area: 'Coloring',
+                startDate: 2019-11-7,
+                dueDate: 2019-11-14,
+                description: 'everything is bad',
+                priority: 'Normal',
+                status: 'Opened'
+            }, {
+                id: 2,
+                name: 'Primer was spilled',
+                assignee: '',
+                area: 'Primer',
+                startDate: 2019-11-6,
+                dueDate: 2019-11-11,
+                description: 'damn',
+                priority: 'Minor',
+                status: 'In work'
+            }
+        ])
+    /* getUsers.getUsersFunc(function (items) {
+        items.map(user => {
+            delete user.password;
+            delete user._id;
+            // user.birthday = String(user.birthday.getDate()).padStart(2, '0') + '-' + String(user.birthday.getMonth()).padStart(2, '0') + '-' + user.birthday.getFullYear();
+        });
+
+        res.send(items);
+    }); */
 });
 
 app.listen(4000, function () {
