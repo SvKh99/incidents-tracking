@@ -41,8 +41,5 @@ export class UsersComponent implements OnInit {
   public add() {
     this.store.dispatch(new AddUser(this.username, this.password, this.birthday, this.position));
     this.username = this.password = this.birthday = this.position = undefined;
-    setTimeout(() => {
-      console.log(this.users);
-    }, 5000);
   }
 }

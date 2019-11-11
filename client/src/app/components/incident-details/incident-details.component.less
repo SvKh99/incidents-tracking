@@ -1,0 +1,68 @@
+@shadow-gray-color: rgb(124, 132, 145);
+@items-white-color: white;
+@text-color: rgb(64, 68, 77);
+
+
+.content {
+  background-color: @items-white-color;
+  min-height: 65vh;
+  padding: 20px;
+  margin-bottom: 25px;
+  border-radius: 0 0 10px 10px;
+  border-bottom: 1.5px solid @shadow-gray-color;
+  border-right: 1.5px solid @shadow-gray-color;
+  border-left: 1.5px solid @shadow-gray-color;
+
+  .incident-details {
+    width: 95%;
+    margin: 20px auto;
+
+    .header {
+      h3 {
+        width: 70%;
+        text-align: left;
+      }
+
+      img {
+        float: right;
+      }
+    }
+
+    .description {
+      p {
+        text-align: justify;
+      }
+    }
+
+    .area-details, .time-details, .footer {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: left;
+
+      div {
+        display: inline-block;
+        width: 200px;
+
+        margin: 5px 0;
+
+        u {
+          margin: 0 10px;
+        }
+      }
+
+      .priority {
+        padding: 5px 0;
+
+        border:  2px solid;
+        border-radius: 10px;
+
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .space {
+        width: 50px;
+      }
+    }
+  }
+}

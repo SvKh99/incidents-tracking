@@ -19,4 +19,17 @@ export class IncidentService {
   addIncident(incident: Incident): Observable<{ incidents: Incident[] }> {
     return this.http.post<{ incidents: Incident[] }>('/api/addIncident', { incident });
   }
+
+  formatDate(date) {
+    date = new Date(date);
+    let dd = date.getDate();
+    if (dd < 10) { dd = '0' + dd; }
+
+    let mm = date.getMonth() + 1;
+    if (mm < 10) { mm = '0' + mm; }
+
+    const yy = date.getYear();
+
+    return dd + '.' + mm + '.' + yy;
+  }
 }

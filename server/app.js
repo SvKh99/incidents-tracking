@@ -86,9 +86,9 @@ app.get('/api/getIncidents', (req, res) => {
                 name: 'Breakdown of coloring instrument',
                 assignee: '',
                 area: 'Coloring',
-                startDate: 2019-11-7,
-                dueDate: 2019-11-14,
-                description: 'everything is bad',
+                startDate: new Date(2019, 11, 7),
+                dueDate: new Date(2019, 11, 14),
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 priority: 'Normal',
                 status: 'Opened'
             }, {
@@ -96,11 +96,21 @@ app.get('/api/getIncidents', (req, res) => {
                 name: 'Primer was spilled',
                 assignee: '',
                 area: 'Primer',
-                startDate: 2019-11-6,
-                dueDate: 2019-11-11,
-                description: 'damn',
+                startDate: new Date(2019, 11, 6),
+                dueDate: new Date(2019, 11, 8),
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                 priority: 'Minor',
-                status: 'In work'
+                status: 'Closed'
+            }, {
+                id: 3,
+                name: 'Disaster',
+                assignee: 'Daniil Sirozh',
+                area: 'Assembling',
+                startDate: new Date(2019, 11, 9),
+                dueDate: new Date(2019, 11, 10),
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                priority: 'Major',
+                status: 'Needed info'
             }
         ])
     /* getUsers.getUsersFunc(function (items) {
@@ -112,6 +122,43 @@ app.get('/api/getIncidents', (req, res) => {
 
         res.send(items);
     }); */
+});
+
+app.post('/api/addIncident', (req, res) => {
+    console.log(req.body);
+    res.send([
+        {
+            id: 1,
+            name: 'Breakdown of coloring instrument',
+            assignee: '',
+            area: 'Coloring',
+            startDate: new Date(2019, 11, 7),
+            dueDate: new Date(2019, 11, 14),
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            priority: 'Normal',
+            status: 'Opened'
+        }, {
+            id: 2,
+            name: 'Primer was spilled',
+            assignee: '',
+            area: 'Primer',
+            startDate: new Date(2019, 11, 6),
+            dueDate: new Date(2019, 11, 8),
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            priority: 'Minor',
+            status: 'Closed'
+        }, {
+            id: 3,
+            name: 'Disaster',
+            assignee: 'Daniil Sirozh',
+            area: 'Assembling',
+            startDate: new Date(2019, 11, 9),
+            dueDate: new Date(2019, 11, 10),
+            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+            priority: 'Major',
+            status: 'Needed info'
+        }, req.body.incident
+    ])
 });
 
 app.listen(4000, function () {

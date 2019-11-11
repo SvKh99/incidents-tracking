@@ -1,0 +1,26 @@
+<div class="content">
+  <div *ngIf="incident.name" class="incident-details">
+    <div class="header">
+      <img src="../../../assets/images/{{ incident.status.replace(' ', '-') }}.png"
+           alt="{{ incident.status }}" width="25" />
+      <h3>{{ incident.name }}</h3>
+    </div>
+    <div class="area-details">
+      <div><b>Area:</b><u>{{ incident.area }}</u></div>
+    </div>
+    <div class="time-details">
+      <div><b>Start:</b><u>{{ incidentService.formatDate(incident.startDate) }}</u></div>
+      <div class="space"></div>
+      <div><b>Due:</b><u>{{ incidentService.formatDate(incident.dueDate) }}</u></div>
+    </div>
+    <div class="description">
+      <p>{{ incident.description }}</p>
+    </div>
+    <div class="footer">
+      <div *ngIf="incident.assignee"><b>Assignee:</b><u>{{ incident.assignee }}</u></div>
+      <div *ngIf="incident.assignee" class="space"></div>
+      <div class="priority" [style.border-color]="calculateColor(incident.priority)"
+           [style.color]="calculateColor(incident.priority)">{{ incident.priority }}</div>
+    </div>
+  </div>
+</div>

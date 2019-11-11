@@ -13,9 +13,10 @@ export const incidentReducers = (
       };
     }
     case EnumIncidentActions.GetIncidentSuccess: {
+      console.log('r', action);
       return {
         ...state,
-        selectedIncident: action.incident,
+        selectedIncident: action.selectedIncident,
       };
     }
     case EnumIncidentActions.AddIncidentSuccess: {

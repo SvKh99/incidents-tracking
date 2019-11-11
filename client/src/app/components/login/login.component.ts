@@ -25,7 +25,7 @@ export class LoginComponent {
              this.error = result.error;
            } else if (result.token) {
              localStorage.setItem('access_token', result.token);
-             this.router.navigate(['users']);
+             this.router.navigate(['incidents']);
            }},
           err => {
            this.error = 'Connection error!';

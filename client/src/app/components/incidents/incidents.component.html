@@ -1,24 +1,75 @@
 <div class="content">
-  <p>Что есть...</p>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Assignee</th>
-        <th>Start Date</th>
-        <th>Dur Date</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let incident of incidents | async">
-        <td>{{ incident.name }}</td>
-        <td>{{ incident.assignee }}</td>
-        <td>{{ incident.startDate }}</td>
-        <td>{{ incident.dueDate }}</td>
-        <td>{{ incident.status }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="incidents-list">
+    <button class="add-incident" (click)="openModal()">Add incident</button>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Assignee</th>
+          <th>Start Date</th>
+          <th>Dur Date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let incident of incidents | async"
+            (click)="navigateToIncident(incident.id)">
+          <td><img src="../../../assets/images/{{ incident.status.replace(' ', '-') }}.png" alt="{{ incident.status }}" width="18"/></td>
+          <td>{{ incident.name }}</td>
+          <td>{{ incident.assignee }}</td>
+          <td>{{ incidentService.formatDate(incident.startDate) }}</td>
+          <td>{{ incidentService.formatDate(incident.dueDate) }}</td>
+          <td>{{ incident.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+<jw-modal id="custom-modal-1">
+  <form (ngSubmit)="addIncident()">
+    <h3>Add Incident</h3>
+
+    <div class="row">
+      <div class="labels" id="name-input-group">
+        <label for="name" class="not-empty-label">Incident Name</label>
+        <input id="name" class="half" type="text" name="incidentName" [(ngModel)]="incidentName"/>
+      </div>
+
+      <div class="labels">
+        <label for="date" class="not-empty-label">Due Date</label>
+        <input id="date" class="half" type="date" name="dueDate" [(ngModel)]="dueDate"/>
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="area"></label>
+      <select id="area" class="half-select"  name="selectedArea" [(ngModel)]="selectedArea">
+        <option disabled selected hidden value="undefined">Area</option>
+        <option *ngFor="let area of areas" [ngValue]="area">{{ area }}</option>
+      </select>
+
+      <label for="assignee"></label>
+      <select id="assignee" class="half-select" name="selectedWorker" [(ngModel)]="selectedWorker">
+        <option disabled selected hidden value="undefined">Assignee</option>
+        <option *ngFor="let worker of users" [ngValue]="worker.username">{{ worker.username }}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="priority"></label>
+      <select id="priority" class="full-select" name="selectedPriority" [(ngModel)]="selectedPriority">
+        <option disabled hidden value="undefined">Priority</option>
+        <option *ngFor="let pr of priority" [ngValue]="pr">{{ pr }}</option>
+      </select>
+    </div>
+    <div class="row">
+      <label for="description" class="not-empty-label">Description</label>
+      <textarea id="description" class="full" name="description" [(ngModel)]="description"></textarea>
+    </div>
+    <div class="row-button">
+      <button [disabled]="!incidentName || !dueDate || !selectedArea || !selectedPriority || !description || checkDueDate()" type="submit">Add</button>
+    </div>
+  </form>
+</jw-modal>

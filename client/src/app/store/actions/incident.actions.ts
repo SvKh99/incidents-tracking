@@ -13,13 +13,17 @@ export enum EnumIncidentActions {
 export class GetIncident implements Action {
   public readonly type = EnumIncidentActions.GetIncident;
 
-  constructor(public id: number) {}
+  constructor(public id: number) {
+    console.log('id', this.id);
+  }
 }
 
 export class GetIncidentSuccess implements Action {
   public readonly type = EnumIncidentActions.GetIncidentSuccess;
 
-  constructor(public incident: Incident) {}
+  constructor(public selectedIncident: Incident) {
+    console.log('action', this.selectedIncident);
+  }
 }
 
 export class GetIncidents implements Action {

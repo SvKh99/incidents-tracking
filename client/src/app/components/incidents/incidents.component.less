@@ -1,19 +1,177 @@
 @shadow-gray-color: rgb(124, 132, 145);
 @items-white-color: white;
 @text-color: rgb(64, 68, 77);
+@background-color: rgba(241, 244, 255, 0.64);
+@shadow-gray-color: rgb(124, 132, 145);
+@items-white-color: white;
+@text-color: rgb(64, 68, 77);
+@background-color: rgba(241, 244, 255, 0.64);
+@disabled-color: rgba(169, 172, 182, 0.64);
 
 
 .content {
-  background-color: @items-white-color;
   min-height: 65vh;
+
   padding: 20px;
   margin-bottom: 25px;
-  border-radius: 0 0 10px 10px;
+
+  background-color: @items-white-color;
+  color: @text-color;
+
   border-bottom: 1.5px solid @shadow-gray-color;
   border-right: 1.5px solid @shadow-gray-color;
   border-left: 1.5px solid @shadow-gray-color;
+  border-radius: 0 0 10px 10px;
+
+  .incidents-list {
+    width: 95%;
+    margin: 25px auto;
+
+    button {
+      float: right;
+      font-size: 15pt;
+      padding: 7px 20px;
+
+      color: @text-color;
+      background-color: @background-color;
+
+      border: 1.5px solid @shadow-gray-color;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: @shadow-gray-color;
+      color: @items-white-color;
+    }
+
+    table {
+      border-collapse: collapse;
+
+      padding: 10px;
+
+      width: 75%;
+
+      text-align: center;
+
+      thead {
+        background-color: @shadow-gray-color;
+        color: @items-white-color;
+      }
+
+      tr {
+        height: 40px;
+
+        border-bottom: 1.5px solid @shadow-gray-color;
+
+        cursor: pointer;
+
+        th {
+          font-size: 13pt;
+        }
+
+        td > img {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
 }
 
-p {
-  margin: 0;
+jw-modal {
+  text-align: center;
+
+  form {
+    width: fit-content;
+    margin: 0 auto;
+
+    h3 {
+      margin-top: 15px;
+      padding-bottom: 10px;
+
+      font-size: 20pt;
+      font-weight: 900;
+    }
+
+    .row {
+      width: 100%;
+      margin: 15px auto;
+
+      text-align: justify;
+
+      .labels {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #name-input-group {
+        float: left;
+      }
+
+      .not-empty-label {
+        margin: 0 10px;
+        font-size: 15pt;
+      }
+
+      input, select, textarea {
+        margin: 5px 10px;
+
+        padding: 5px 7px;
+
+        background-color: @background-color;
+
+        border: 1.5px solid @shadow-gray-color;
+        border-radius: 5px;
+
+        font-size: 15pt;
+      }
+
+      input:invalid {
+        border: 1.5px solid red;
+      }
+
+      .half {
+        width: 200px;
+      }
+
+      .half-select {
+        width: 216.5px;
+      }
+
+      .full-select {
+        width: 95.5%;
+      }
+
+      .full {
+        width: 92%;
+      }
+    }
+
+    .row-button {
+      text-align: center;
+
+      button {
+        padding: 7px 20px;
+
+        color: @text-color;
+        background-color: @background-color;
+
+        border: 1.5px solid @shadow-gray-color;
+        border-radius: 5px;
+
+        font-size: 15pt;
+      }
+
+      button:hover {
+        background-color: @shadow-gray-color;
+        color: @items-white-color;
+      }
+
+      button:disabled {
+        color: @disabled-color;
+        background-color: @items-white-color;
+
+        border: 1.5px solid @disabled-color;
+      }
+    }
+  }
 }

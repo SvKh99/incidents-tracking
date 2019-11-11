@@ -26,6 +26,9 @@ import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { ProcessComponent } from './components/process/process.component';
 import { IncidentsComponent } from './components/incidents/incidents.component';
+import { IncidentDetailsComponent } from './components/incident-details/incident-details.component';
+
+import { ModalComponent } from './modal/_components';
 
 export function getToken() {
   return localStorage.getItem('access_token');
@@ -37,7 +40,9 @@ export function getToken() {
     LoginComponent,
     UsersComponent,
     ProcessComponent,
-    IncidentsComponent
+    IncidentsComponent,
+    IncidentDetailsComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule,

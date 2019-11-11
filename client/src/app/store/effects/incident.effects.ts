@@ -32,8 +32,12 @@ export class IncidentEffects {
     map(action => action.id),
     withLatestFrom(this.store.pipe(select(selectIncidentList))),
     switchMap(([id, incidents]) => {
+      console.log('incidents', incidents);
       const selectedIncident = incidents.filter(incident => incident.id === +id)[0];
-      return of(new GetIncidentSuccess(selectedIncident));
+      console.log(selectedIncident);
+      const q = of(new GetIncidentSuccess(selectedIncident));
+      console.log('q', q);
+      return q;
     })
   );
 
@@ -43,7 +47,14 @@ export class IncidentEffects {
     switchMap((action) => {
       return this.incidentService.addIncident(action.incident);
     }),
-    switchMap((value: { incidents: Incident[] }) => of(new AddIncidentSuccess(value.incidents)))
+    switchMap((value: { incidents: Incident[] }) => {
+      // @ts-ignore
+      const a = of(new AddIncidentSuccess(value));
+      console.log(a);
+      console.log(value);
+      console.log(value.incidents);
+      return a;
+    })
   );
 
   constructor(

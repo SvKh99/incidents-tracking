@@ -1,10 +1,15 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {select, Store} from '@ngrx/store';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+
 import { AppState } from '../../store/state/app.state';
-import { GetUsers } from '../../store/actions/user.actions';
+import {AddUser, GetUsers} from '../../store/actions/user.actions';
 import { selectUserList } from '../../store/selectors/user.selector';
 import { selectIncidentList } from '../../store/selectors/incident.selector';
-import { GetIncidents } from '../../store/actions/incident.actions';
+import {AddIncident, GetIncidents} from '../../store/actions/incident.actions';
+
+import { IncidentService } from '../../services/incident.service';
+import { ModalService } from '../../modal/_services';
 
 @Component({
   selector: 'app-incidents',
@@ -12,12 +17,14 @@ import { GetIncidents } from '../../store/actions/incident.actions';
   styleUrls: ['./incidents.component.less']
 })
 export class IncidentsComponent implements OnInit {
-  @Output()
-  incidentSelected: EventEmitter<string> = new EventEmitter();
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private router: Router,
+              private incidentService: IncidentService, private modalService: ModalService) { }
+  @Output()
+  incidentSelected: EventEmitter<number> = new EventEmitter();
 
   // public users = this.store.pipe(select(selectUserList));
+  public users = [{username: 'a'}, {username: 'b'}, {username: 'c'}];
   public areas =  [
     'Pressing', 'Welding', 'Galvanizing', 'Primer', 'Coloring', 'Assembling', 'Storage', 'Transporting'
   ];
@@ -25,14 +32,52 @@ export class IncidentsComponent implements OnInit {
     'Blocker', 'Critical', 'Major', 'Normal', 'Minor'
   ];
   public status = [
-    'Opened', 'Needed extra info', 'In work', 'Resolved', 'Checked', 'Closed', 'Defect', 'Reopened'
+    'Opened', 'Needed info', 'In work', 'Resolved', 'Checked', 'Closed', 'Defect'
   ];
+
+  public incidentName: string;
+  public dateNow: Date;
+  public dueDate: Date;
+  public selectedArea: string = undefined;
+  public selectedWorker: string = undefined;
+  public selectedPriority: string = undefined;
+  public description;
 
   public incidents = this.store.pipe(select(selectIncidentList));
 
   ngOnInit() {
     // this.store.dispatch(new GetUsers());
     this.store.dispatch(new GetIncidents());
+    this.dateNow = new Date();
   }
 
+  navigateToIncident(id: number) {
+    this.router.navigate(['incident', id]);
+  }
+
+  checkDueDate() {
+    this.dateNow = new Date();
+    return this.dateNow.getTime() > new Date(this.dueDate).getTime();
+  }
+
+  openModal() {
+    this.modalService.open('custom-modal-1');
+  }
+
+  addIncident() {
+    const incident = {
+      id: undefined,
+      name: this.incidentName,
+      assignee: this.selectedWorker,
+      area: this.selectedArea,
+      startDate: this.dateNow,
+      dueDate: new Date(this.dueDate),
+      description: this.description,
+      priority: this.selectedPriority,
+      status: 'Opened'
+    };
+
+    this.store.dispatch(new AddIncident(incident));
+    this.modalService.close('custom-modal-1');
+  }
 }

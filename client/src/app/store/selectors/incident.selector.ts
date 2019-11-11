@@ -15,3 +15,11 @@ export const selectIncidentList = createSelector(
     return state.incidents;
   }
 );
+
+export const selectSelectedIncident = createSelector(
+  selectIncidents,
+  (state: IncidentState) => {
+    console.log('in selector 3', state.selectedIncident);
+    return state.selectedIncident;
+  }
+);
