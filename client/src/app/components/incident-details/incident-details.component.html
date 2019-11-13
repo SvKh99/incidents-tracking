@@ -1,8 +1,8 @@
 <div class="content">
   <div *ngIf="incident.name" class="incident-details">
     <div class="header">
-      <img src="../../../assets/images/{{ incident.status.replace(' ', '-') }}.png"
-           alt="{{ incident.status }}" width="25" />
+      <img src="../../../assets/images/{{ selectedStatus.replace(' ', '-') }}.png"
+           alt="{{ selectedStatus }}" width="25" />
       <h3>{{ incident.name }}</h3>
     </div>
     <div class="area-details">
@@ -14,13 +14,32 @@
       <div><b>Due:</b><u>{{ incidentService.formatDate(incident.dueDate) }}</u></div>
     </div>
     <div class="description">
-      <p>{{ incident.description }}</p>
+      <textarea id="description" name="description" [(ngModel)]="description">{{ incident.description }}</textarea>
     </div>
     <div class="footer">
-      <div *ngIf="incident.assignee"><b>Assignee:</b><u>{{ incident.assignee }}</u></div>
-      <div *ngIf="incident.assignee" class="space"></div>
+      <div *ngIf="selectedWorker"><b>Assignee:</b><u>{{ selectedWorker }}</u></div>
+      <div *ngIf="selectedWorker" class="space"></div>
       <div class="priority" [style.border-color]="calculateColor(incident.priority)"
            [style.color]="calculateColor(incident.priority)">{{ incident.priority }}</div>
+    </div>
+    <div class="edit-incident">
+      <div *ngIf="!incident.assignee" class="assignee-group">
+        <label for="assignee">Set assignee: </label>
+        <select id="assignee" class="half-select" name="selectedWorker" [(ngModel)]="selectedWorker">
+          <option disabled selected hidden value="undefined">Select Worker</option>
+          <option *ngFor="let worker of users | async" [ngValue]="worker.username">{{ worker.username }}</option>
+        </select>
+      </div>
+      <div class="status-group">
+        <label for="status">Change Incident's Status:</label>
+        <select id="status" name="selectedStatus" [(ngModel)]="selectedStatus">
+          <option disabled hidden value="undefined">Status</option>
+          <option *ngFor="let st of status" [ngValue]="st">{{ st }}</option>
+        </select>
+      </div>
+      <div class="save-button">
+        <button (click)="editIncident()">Save changes</button>
+      </div>
     </div>
   </div>
 </div>

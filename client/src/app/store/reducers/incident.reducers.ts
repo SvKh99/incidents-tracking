@@ -1,5 +1,5 @@
-import {IncidentState, initialIncidentState} from '../state/incident.state';
-import { EnumIncidentActions, IncidentActions } from '../actions/incident.actions';
+import { IncidentState, initialIncidentState } from '../state/incident.state';
+import { EnumIncidentActions, IncidentActions} from '../actions/incident.actions';
 
 export const incidentReducers = (
   state = initialIncidentState,
@@ -13,7 +13,6 @@ export const incidentReducers = (
       };
     }
     case EnumIncidentActions.GetIncidentSuccess: {
-      console.log('r', action);
       return {
         ...state,
         selectedIncident: action.selectedIncident,
@@ -23,6 +22,12 @@ export const incidentReducers = (
       return {
         ...state,
         incidents: action.incidents,
+      };
+    }
+    case EnumIncidentActions.EditIncidentSuccess: {
+      return {
+        ...state,
+        selectedIncident: action.selectedIncident,
       };
     }
     default:

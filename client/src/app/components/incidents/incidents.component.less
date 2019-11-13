@@ -1,10 +1,5 @@
 @shadow-gray-color: rgb(124, 132, 145);
 @items-white-color: white;
-@text-color: rgb(64, 68, 77);
-@background-color: rgba(241, 244, 255, 0.64);
-@shadow-gray-color: rgb(124, 132, 145);
-@items-white-color: white;
-@text-color: rgb(64, 68, 77);
 @background-color: rgba(241, 244, 255, 0.64);
 @disabled-color: rgba(169, 172, 182, 0.64);
 
@@ -16,7 +11,6 @@
   margin-bottom: 25px;
 
   background-color: @items-white-color;
-  color: @text-color;
 
   border-bottom: 1.5px solid @shadow-gray-color;
   border-right: 1.5px solid @shadow-gray-color;
@@ -32,7 +26,6 @@
       font-size: 15pt;
       padding: 7px 20px;
 
-      color: @text-color;
       background-color: @background-color;
 
       border: 1.5px solid @shadow-gray-color;
@@ -86,10 +79,20 @@ jw-modal {
 
     h3 {
       margin-top: 15px;
-      padding-bottom: 10px;
 
       font-size: 20pt;
       font-weight: 900;
+    }
+
+    .error-div {
+      height: 15px;
+
+      #error {
+        width: 100%;
+
+        color: red;
+        text-align: center;
+      }
     }
 
     .row {
@@ -110,6 +113,11 @@ jw-modal {
       .not-empty-label {
         margin: 0 10px;
         font-size: 15pt;
+      }
+
+      textarea {
+        outline: none;
+        resize: none;
       }
 
       input, select, textarea {
@@ -152,7 +160,6 @@ jw-modal {
       button {
         padding: 7px 20px;
 
-        color: @text-color;
         background-color: @background-color;
 
         border: 1.5px solid @shadow-gray-color;

@@ -20,16 +20,15 @@ export class GetUsersSuccess implements Action {
 
 export class AddUser implements Action {
   public readonly  type = EnumUserActions.AddUser;
-  public username: string;
-  public password: string;
-  public birthday: Date;
-  public position: string;
+  public newUser: {
+    username: string;
+    password: string;
+    birthday: string;
+    position: string;
+  };
 
-  constructor(username, password, birthday, position) {
-    this.username = username;
-    this.password = password;
-    this.birthday = birthday;
-    this.position = position;
+  constructor(newUser) {
+    this.newUser = newUser;
   }
 }
 

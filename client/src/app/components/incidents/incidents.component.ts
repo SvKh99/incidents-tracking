@@ -3,10 +3,10 @@ import { select, Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 
 import { AppState } from '../../store/state/app.state';
-import {AddUser, GetUsers} from '../../store/actions/user.actions';
+import { GetUsers} from '../../store/actions/user.actions';
 import { selectUserList } from '../../store/selectors/user.selector';
 import { selectIncidentList } from '../../store/selectors/incident.selector';
-import {AddIncident, GetIncidents} from '../../store/actions/incident.actions';
+import { AddIncident, GetIncidents } from '../../store/actions/incident.actions';
 
 import { IncidentService } from '../../services/incident.service';
 import { ModalService } from '../../modal/_services';
@@ -23,16 +23,12 @@ export class IncidentsComponent implements OnInit {
   @Output()
   incidentSelected: EventEmitter<number> = new EventEmitter();
 
-  // public users = this.store.pipe(select(selectUserList));
-  public users = [{username: 'a'}, {username: 'b'}, {username: 'c'}];
+  public users = this.store.pipe(select(selectUserList));
   public areas =  [
     'Pressing', 'Welding', 'Galvanizing', 'Primer', 'Coloring', 'Assembling', 'Storage', 'Transporting'
   ];
   public priority = [
     'Blocker', 'Critical', 'Major', 'Normal', 'Minor'
-  ];
-  public status = [
-    'Opened', 'Needed info', 'In work', 'Resolved', 'Checked', 'Closed', 'Defect'
   ];
 
   public incidentName: string;
@@ -46,7 +42,7 @@ export class IncidentsComponent implements OnInit {
   public incidents = this.store.pipe(select(selectIncidentList));
 
   ngOnInit() {
-    // this.store.dispatch(new GetUsers());
+    this.store.dispatch(new GetUsers());
     this.store.dispatch(new GetIncidents());
     this.dateNow = new Date();
   }
@@ -78,6 +74,8 @@ export class IncidentsComponent implements OnInit {
     };
 
     this.store.dispatch(new AddIncident(incident));
+    this.incidentName = this.selectedWorker = this.selectedArea =
+      this.dateNow = this.dueDate = this.description = this.selectedPriority = undefined;
     this.modalService.close('custom-modal-1');
   }
 }

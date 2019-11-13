@@ -4,14 +4,12 @@ import { AppState } from '../state/app.state';
 import { IncidentState } from '../state/incident.state';
 
 const selectIncidents = (state: AppState) => {
-  console.log('in selector', state);
   return state.incidentsState;
 };
 
 export const selectIncidentList = createSelector(
   selectIncidents,
   (state: IncidentState) => {
-    console.log('in selector 2', state);
     return state.incidents;
   }
 );
@@ -19,7 +17,6 @@ export const selectIncidentList = createSelector(
 export const selectSelectedIncident = createSelector(
   selectIncidents,
   (state: IncidentState) => {
-    console.log('in selector 3', state.selectedIncident);
     return state.selectedIncident;
   }
 );

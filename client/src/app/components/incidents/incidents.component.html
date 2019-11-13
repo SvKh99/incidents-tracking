@@ -31,6 +31,9 @@
   <form (ngSubmit)="addIncident()">
     <h3>Add Incident</h3>
 
+    <div class="error-div">
+      <p *ngIf="checkDueDate()" id="error">Due Date must be greater than today!</p>
+    </div>
     <div class="row">
       <div class="labels" id="name-input-group">
         <label for="name" class="not-empty-label">Incident Name</label>
@@ -53,7 +56,7 @@
       <label for="assignee"></label>
       <select id="assignee" class="half-select" name="selectedWorker" [(ngModel)]="selectedWorker">
         <option disabled selected hidden value="undefined">Assignee</option>
-        <option *ngFor="let worker of users" [ngValue]="worker.username">{{ worker.username }}</option>
+        <option *ngFor="let worker of users | async" [ngValue]="worker.username">{{ worker.username }}</option>
       </select>
     </div>
 

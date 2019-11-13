@@ -11,13 +11,15 @@ export class IncidentService {
   constructor(private http: HttpClient) { }
 
   getIncidents(): Observable<{ incidents: Incident[] }> {
-    this.http.get<{ incidents: Incident[] }>('/api/getIncidents').subscribe((res) =>
-    console.log(res));
     return this.http.get<{ incidents: Incident[] }>('/api/getIncidents');
   }
 
   addIncident(incident: Incident): Observable<{ incidents: Incident[] }> {
     return this.http.post<{ incidents: Incident[] }>('/api/addIncident', { incident });
+  }
+
+  editIncident(id: number, description: string, assignee: string, status: string): Observable<{incident: Incident }> {
+    return this.http.patch<{ incident: Incident }>('/api/editIncident', { id, description, assignee, status });
   }
 
   formatDate(date) {

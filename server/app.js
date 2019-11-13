@@ -7,7 +7,21 @@ const md5 = require('md5');
 
 const getUsers = require('./getUsers');
 const addUser = require('./addUser');
+const getIncidents = require('./getIncidents');
+const addIncident = require('./addIncident');
+const editIncident = require('./editIncident');
 
+function quickSearchByID(search, arr){
+    if (search === arr[0].id) return 0;
+    if (search === arr[arr.length - 1].id) return arr.length - 1;
+
+    for (var x1 = 0, mid, x2 = arr.length; x1 < x2;){
+        mid = x2 + x1 - 1 >> 1;
+        if (arr[mid].id > search) x2 = mid;
+        else x1 = mid + 1;
+    }
+    return (x1 %= arr.length) && arr[x1 -= 1].id === search ? x1 : -1;
+}
 
 app.use(bodyParser.json());
 app.use(expressJwt({ secret: 'accessKey' }).unless({ path: ['/api/auth'] }));
@@ -38,39 +52,37 @@ app.get('/api/getUsers', (req, res) => {
         items.map(user => {
             delete user.password;
             delete user._id;
-            // user.birthday = String(user.birthday.getDate()).padStart(2, '0') + '-' + String(user.birthday.getMonth()).padStart(2, '0') + '-' + user.birthday.getFullYear();
         });
 
-        res.send(items);
+        res.send({ users: items });
     });
 });
 
 app.post('/api/addUser', (req, res) => {
-    let body = req.body;
+    let newUser = req.body.newUser;
 
     getUsers.getUsersFunc(function(items) {
-        const user = items.find(user => user.username === body.username);
+        const user = items.find(user => user.username === newUser.username);
 
         if(!!user) {
             res.send({ users: items, message: 'Error! User with this name is already existed!' });
             return;
         }
-
-        let newUser = {
-            username: body.username,
-            password: md5(body.password),
-            birthday: body.birthday,
-            position: body.position
+        let newUserWithPassword = {
+            username: newUser.username,
+            password: md5(newUser.password),
+            birthday: newUser.birthday,
+            position: newUser.position
         };
 
         try {
-            addUser(newUser);
+            addUser(newUserWithPassword);
 
             items.map(user => {
                 delete user.password;
                 delete user._id;
             });
-            items.push(newUser)
+            items.push(newUserWithPassword)
         } catch (e) {
             console.log(e);
         }
@@ -80,85 +92,64 @@ app.post('/api/addUser', (req, res) => {
 });
 
 app.get('/api/getIncidents', (req, res) => {
-    res.send([
-            {
-                id: 1,
-                name: 'Breakdown of coloring instrument',
-                assignee: '',
-                area: 'Coloring',
-                startDate: new Date(2019, 11, 7),
-                dueDate: new Date(2019, 11, 14),
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                priority: 'Normal',
-                status: 'Opened'
-            }, {
-                id: 2,
-                name: 'Primer was spilled',
-                assignee: '',
-                area: 'Primer',
-                startDate: new Date(2019, 11, 6),
-                dueDate: new Date(2019, 11, 8),
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                priority: 'Minor',
-                status: 'Closed'
-            }, {
-                id: 3,
-                name: 'Disaster',
-                assignee: 'Daniil Sirozh',
-                area: 'Assembling',
-                startDate: new Date(2019, 11, 9),
-                dueDate: new Date(2019, 11, 10),
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                priority: 'Major',
-                status: 'Needed info'
-            }
-        ])
-    /* getUsers.getUsersFunc(function (items) {
-        items.map(user => {
-            delete user.password;
-            delete user._id;
-            // user.birthday = String(user.birthday.getDate()).padStart(2, '0') + '-' + String(user.birthday.getMonth()).padStart(2, '0') + '-' + user.birthday.getFullYear();
+    getIncidents.getIncidentsFunc(function (items) {
+        items.map(incident => {
+            delete incident._id;
         });
-
-        res.send(items);
-    }); */
+        res.send({ incidents: items });
+    });
 });
 
 app.post('/api/addIncident', (req, res) => {
-    console.log(req.body);
-    res.send([
-        {
-            id: 1,
-            name: 'Breakdown of coloring instrument',
-            assignee: '',
-            area: 'Coloring',
-            startDate: new Date(2019, 11, 7),
-            dueDate: new Date(2019, 11, 14),
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            priority: 'Normal',
-            status: 'Opened'
-        }, {
-            id: 2,
-            name: 'Primer was spilled',
-            assignee: '',
-            area: 'Primer',
-            startDate: new Date(2019, 11, 6),
-            dueDate: new Date(2019, 11, 8),
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            priority: 'Minor',
-            status: 'Closed'
-        }, {
-            id: 3,
-            name: 'Disaster',
-            assignee: 'Daniil Sirozh',
-            area: 'Assembling',
-            startDate: new Date(2019, 11, 9),
-            dueDate: new Date(2019, 11, 10),
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            priority: 'Major',
-            status: 'Needed info'
-        }, req.body.incident
-    ])
+    let newIncident = req.body.incident;
+
+    getIncidents.getIncidentsFunc(function (items) {
+        let ids = [];
+
+        items.forEach(item => {
+            ids.push(item.id);
+        });
+        let newIncidentID;
+
+        if (ids.length === 0){
+            newIncidentID = 1;
+        } else {
+            newIncidentID = Math.max.apply(null, ids) + 1;
+        }
+        newIncident.id = newIncidentID;
+
+        try {
+            addIncident(newIncident);
+            items.map(incident => {
+                delete incident._id;
+            });
+            items.push(newIncident)
+        } catch (e) {
+            console.log(e);
+        }
+
+        res.send({ incidents: items });
+    });
+});
+
+app.patch('/api/editIncident', (req, res) => {
+    let editedParams = req.body;
+    console.log(editedParams);
+
+    getIncidents.getIncidentsFunc(function (items) {
+        let index = quickSearchByID(editedParams.id, items);
+
+        if (index !== -1) {
+            items[index].description = editedParams.description;
+            items[index].status = editedParams.status;
+            items[index].assignee = editedParams.assignee;
+            console.log(index);
+
+            editIncident(editedParams.id, editedParams.description, editedParams.assignee, editedParams.status);
+        }
+
+        res.send({ incident: items[index] })
+    });
 });
 
 app.listen(4000, function () {

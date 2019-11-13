@@ -39,7 +39,14 @@ export class UsersComponent implements OnInit {
   }
 
   public add() {
-    this.store.dispatch(new AddUser(this.username, this.password, this.birthday, this.position));
+    const newUser = {
+      username: this.username,
+      password: this.password,
+      birthday: this.birthday,
+      position: this.position
+    };
+
+    this.store.dispatch(new AddUser(newUser));
     this.username = this.password = this.birthday = this.position = undefined;
   }
 }
