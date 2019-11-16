@@ -1,42 +1,62 @@
 @shadow-gray-color: rgb(124, 132, 145);
 @items-white-color: white;
-@text-color: rgb(64, 68, 77);
+@text-color-original: rgb(64, 63, 81);
 
 .header {
   position: fixed;
   top: 0;
+
   width: 100%;
+  padding: 12px 30px;
+
+  display: flex;
+  flex-flow: row wrap;
+
+  background-color: @items-white-color;
+  border-bottom: 1.5px solid @shadow-gray-color;
 
   h1 {
-    margin: 0;
-    padding: 20px;
+    margin: auto 0;
 
-    background-color: @items-white-color;
-    color: @text-color;
-
-    border-bottom: 1.5px solid @shadow-gray-color;
-
-    text-align: center;
+    text-align: left;
 
     font-family: 'Staatliches', cursive;
     font-weight: normal;
     font-size: 25pt;
   }
 
-  .pills {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-
-    width: 100px;
+  .tabs {
+    margin: auto;
 
     .link {
       padding: 10px 20px;
+      color: @shadow-gray-color;
+    }
+
+    .active {
+      color: @text-color-original;
+      font-size: 15pt;
+    }
+
+    .link:hover {
+      color: @text-color-original;
+    }
+  }
+
+  .pills {
+    width: 200px;
+    margin: auto 50px auto 0;
+
+    text-align: right;
+
+    .link {
+      margin: 0 auto;
+      padding: 7px 15px;
 
       background-color: @items-white-color;
 
       border: 1.5px solid @shadow-gray-color;
-      border-radius: 10px;
+      border-radius: 5px;
     }
 
     .link:hover {
@@ -49,45 +69,9 @@
 .container-fluid {
   width: 95%;
   margin: 0 auto;
-
-  .tabs {
-    margin-top: 35px;
-    padding-bottom: 10px;
-
-    border-bottom: 1.5px solid @shadow-gray-color;
-
-
-    .link {
-      padding: 10px 20px;
-
-      background-color: @items-white-color;
-
-      border: 1.5px solid @shadow-gray-color;
-      border-radius: 10px 10px 0 0;
-    }
-
-    #process, #users {
-      border-left: none;
-    }
-
-    .active {
-      border-bottom: 1.5px solid @items-white-color;
-    }
-
-    .link:hover {
-      background-color: @shadow-gray-color;
-      color: @items-white-color;
-      border: 1.5px solid @shadow-gray-color;
-    }
-  }
 }
 
 .container-fluid, .header {
-  a {
-    text-decoration: none;
-    color: @text-color;
-  }
-
   .link {
     font-size: 13.5pt;
     font-weight: 900;
@@ -96,5 +80,5 @@
 
 .space {
   width: 100%;
-  height: 80px;
+  height: 100px;
 }

@@ -5,17 +5,15 @@
 
 
 .content {
-  min-height: 65vh;
+  min-height: 70vh;
 
   margin-bottom: 25px;
   padding-bottom: 50px;
 
   background-color: @items-white-color;
 
-  border-bottom: 1.5px solid @shadow-gray-color;
-  border-right: 1.5px solid @shadow-gray-color;
-  border-left: 1.5px solid @shadow-gray-color;
-  border-radius: 0 0 10px 10px;
+  border: 1.5px solid @shadow-gray-color;
+  border-radius: 10px;
 
   .users {
     display: flex;
@@ -46,6 +44,10 @@
         thead {
           background-color: @shadow-gray-color;
           color: @items-white-color;
+
+          .index {
+            width: 25px;
+          }
         }
 
         tr {
@@ -56,6 +58,13 @@
           th {
             font-size: 13pt;
           }
+        }
+
+        tr:hover td{
+          background: @background-color;
+          font-weight: bold;
+
+          cursor: pointer;
         }
       }
     }
@@ -130,6 +139,8 @@
 
             border: 1.5px solid @shadow-gray-color;
             border-radius: 5px;
+
+            font-size: 15pt;
           }
 
           button:hover {

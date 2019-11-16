@@ -27,17 +27,17 @@
         <label for="assignee">Set assignee: </label>
         <select id="assignee" class="half-select" name="selectedWorker" [(ngModel)]="selectedWorker">
           <option disabled selected hidden value="undefined">Select Worker</option>
-          <option *ngFor="let worker of users | async" [ngValue]="worker.username">{{ worker.username }}</option>
+          <option *ngFor="let worker of users" [ngValue]="worker.username">{{ worker.username }}</option>
         </select>
       </div>
-      <div class="status-group">
+      <div class="status-group" *ngIf="incident.status !== 'Checked'">
         <label for="status">Change Incident's Status:</label>
         <select id="status" name="selectedStatus" [(ngModel)]="selectedStatus">
-          <option disabled hidden value="undefined">Status</option>
-          <option *ngFor="let st of status" [ngValue]="st">{{ st }}</option>
+          <option disabled selected hidden value="{{ incident.status }}">{{ incident.status }}</option>
+          <option *ngFor="let st of status[incident.status.replace(' ', '')]" [ngValue]="st">{{ st }}</option>
         </select>
       </div>
-      <div class="save-button">
+      <div class="save-button" *ngIf="incident.status !== 'Checked' || !incident.assignee">
         <button (click)="editIncident()">Save changes</button>
       </div>
     </div>

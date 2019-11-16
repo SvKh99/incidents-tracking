@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Open+Sans|Staatliches&display=swap.css');
 
 @background-color: rgba(241, 244, 255, 0.64);
-@text-color: rgb(64, 68, 77);
+@text-color: rgb(64, 63, 81);
 
 body {
   margin: 0;
@@ -9,8 +9,18 @@ body {
 
   font-family: 'Lato', sans-serif;
   color: @text-color;
-}
 
-button {
-  cursor: pointer;
+  a {
+    text-decoration: none;
+    color: @text-color;
+  }
+
+  button {
+    cursor: pointer;
+    color: @text-color;
+  }
+
+  input {
+    color: @text-color;
+  }
 }

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Incident } from '../../models/incident.interface';
 import { AppState } from '../../store/state/app.state';
-import { EditIncident, GetIncident} from '../../store/actions/incident.actions';
+import { EditIncident, GetIncident, GetIncidents } from '../../store/actions/incident.actions';
 import { selectSelectedIncident } from '../../store/selectors/incident.selector';
 import { selectUserList } from '../../store/selectors/user.selector';
 import { GetUsers } from '../../store/actions/user.actions';
@@ -19,17 +19,25 @@ import { IncidentService } from '../../services/incident.service';
 export class IncidentDetailsComponent implements OnInit {
   public incident: Incident;
   public description: string;
-  public selectedWorker: string;
-  public selectedStatus: string;
+  public selectedWorker: string = undefined;
+  public selectedStatus: string = undefined;
 
-  public status = [
-    'Opened', 'Needed info', 'In work', 'Resolved', 'Checked', 'Closed', 'Defect'
-  ];
+  public status = {
+    Opened: ['Needed info', 'In work'],
+    Neededinfo: ['In work'],
+    Inwork: ['Needed info', 'Resolved'],
+    Resolved: ['Checked', 'Closed'],
+    Closed: ['Checked', 'Defect'],
+    Checked: [],
+    Defect: ['Needed info', 'In work']
+  };
+
   public users = this.store.pipe(select(selectUserList));
 
   constructor(private store: Store<AppState>, private route: ActivatedRoute, private incidentService: IncidentService) { }
 
   ngOnInit() {
+    this.store.dispatch(new GetIncidents());
     this.store.dispatch(new GetIncident(this.route.snapshot.params.id));
     this.store.pipe(select(selectSelectedIncident)).subscribe(res => {
       this.incident = res;

@@ -1,19 +1,57 @@
 @shadow-gray-color: rgb(124, 132, 145);
+@table-cells-color: rgb(221, 228, 244);
 @items-white-color: white;
-@text-color: rgb(64, 68, 77);
+@background-color: rgba(241, 244, 255, 0.64);
+@disabled-color: rgba(169, 172, 182, 0.64);
 
 
 .content {
-  background-color: @items-white-color;
-  min-height: 65vh;
+  min-height: 70vh;
+
   padding: 20px;
   margin-bottom: 25px;
-  border-radius: 0 0 10px 10px;
-  border-bottom: 1.5px solid @shadow-gray-color;
-  border-right: 1.5px solid @shadow-gray-color;
-  border-left: 1.5px solid @shadow-gray-color;
-}
 
-p {
-  margin: 0;
+  background-color: @items-white-color;
+
+  border: 1.5px solid @shadow-gray-color;
+  border-radius: 5px;
+
+  table {
+    border-collapse: collapse;
+
+    margin: 25px auto;
+    padding: 10px;
+
+    width: 75%;
+
+    text-align: center;
+
+    thead {
+      background-color: @shadow-gray-color;
+      color: @items-white-color;
+    }
+
+    tr {
+      height: 40px;
+
+      border-bottom: 1.5px solid @shadow-gray-color;
+
+      cursor: pointer;
+
+      th {
+        font-size: 13pt;
+      }
+
+      td > img {
+        vertical-align: middle;
+      }
+    }
+
+    tr:hover td{
+      background: @background-color;
+      font-weight: bold;
+
+      cursor: pointer;
+    }
+  }
 }
