@@ -3,6 +3,7 @@
 @items-white-color: white;
 @background-color: rgba(241, 244, 255, 0.64);
 @disabled-color: rgba(169, 172, 182, 0.64);
+@text-color: rgb(64, 63, 81);
 
 
 .content {
@@ -15,6 +16,25 @@
 
   border: 1.5px solid @shadow-gray-color;
   border-radius: 5px;
+
+  h2 {
+    display: none;
+
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+
+    text-align: center;
+
+    border-bottom: 1.5px solid @shadow-gray-color;
+  }
+
+  @media screen and (max-width: 710px) {
+    h2 {
+      display: block;
+    }
+  }
 
   table {
     border-collapse: collapse;
@@ -45,13 +65,64 @@
       td > img {
         vertical-align: middle;
       }
+
+      td > span {
+          display: none;
+          font-weight: bold;
+        }
+
+      @media screen and (max-width: 600px) {
+        td > span {
+          display: inline;
+        }
+      }
     }
 
     tr:hover td{
       background: @background-color;
+      color: @text-color;
       font-weight: bold;
 
       cursor: pointer;
     }
+  }
+
+  @media screen and (max-width: 600px) {
+    table {
+      width: 100%;
+      margin: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  thead {
+    display: none;
+  }
+
+  tr:nth-of-type(2n) {
+    background-color: inherit;
+  }
+  tr td:first-child {
+    background: @shadow-gray-color;
+    color: @items-white-color;
+    font-weight:bold;
+    font-size:1.3em;
+  }
+
+  tr th:first-child {
+    font-weight:bold;
+    font-size:1.3em;
+  }
+
+  tbody td, tbody th {
+    display: block;
+    text-align:center;
+  }
+
+  tbody td, tbody th:before {
+    content: attr(data-th);
+    display: block;
+    text-align:center;
   }
 }

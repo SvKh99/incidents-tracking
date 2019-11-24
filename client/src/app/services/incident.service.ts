@@ -3,22 +3,32 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Incident } from '../models/incident.interface';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IncidentService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
   getIncidents(): Observable<{ incidents: Incident[] }> {
+    if (this.auth.checkTokenExpiration()) {
+      this.auth.getNewToken();
+    }
     return this.http.get<{ incidents: Incident[] }>('/api/getIncidents');
   }
 
   addIncident(incident: Incident): Observable<{ incidents: Incident[] }> {
+    if (this.auth.checkTokenExpiration()) {
+      this.auth.getNewToken();
+    }
     return this.http.post<{ incidents: Incident[] }>('/api/addIncident', { incident });
   }
 
   editIncident(id: number, description: string, assignee: string, status: string): Observable<{incident: Incident }> {
+    if (this.auth.checkTokenExpiration()) {
+      this.auth.getNewToken();
+    }
     return this.http.patch<{ incident: Incident }>('/api/editIncident', { id, description, assignee, status });
   }
 

@@ -2,6 +2,7 @@
 @items-white-color: white;
 @background-color: rgba(241, 244, 255, 0.64);
 @disabled-color: rgba(169, 172, 182, 0.64);
+@text-color: rgb(64, 63, 81);
 
 
 .content {
@@ -14,6 +15,24 @@
 
   border: 1.5px solid @shadow-gray-color;
   border-radius: 10px;
+
+  h2 {
+    display: none;
+
+    width: 92.5%;
+    padding-bottom: 10px;
+    margin: 20px auto 0 auto;
+
+    text-align: center;
+
+    border-bottom: 1.5px solid @shadow-gray-color;
+  }
+
+  @media screen and (max-width: 710px) {
+    h2 {
+      display: block;
+    }
+  }
 
   .users {
     display: flex;
@@ -62,6 +81,7 @@
 
         tr:hover td{
           background: @background-color;
+          color: @text-color;
           font-weight: bold;
 
           cursor: pointer;
@@ -71,13 +91,13 @@
 
     .add-user {
       width: 40%;
-      min-width: 220px;
+      min-width: 240px;
 
       margin-top: 50px;
 
       form {
-        max-width: 250px;
-        min-width: 220px;
+        width: 50%;
+        min-width: 200px;
         margin: 0 auto;
         padding: 20px;
 
@@ -158,5 +178,84 @@
       }
     }
   }
+}
+
+
+@media screen and (max-width: 600px) {
+  thead {
+    display: none;
+  }
+
+  tr:nth-of-type(2n) {
+    background-color: inherit;
+  }
+  tr td:first-child {
+    background: @shadow-gray-color;
+    color: @items-white-color;
+    font-weight:bold;
+    font-size:1.3em;
+  }
+
+  tr th:first-child {
+    font-weight:bold;
+    font-size:1.3em;
+  }
+
+  tbody td, tbody th {
+    display: block;
+    text-align:center;
+  }
+
+  tbody td, tbody th:before {
+    content: attr(data-th);
+    display: block;
+    text-align:center;
+  }
+}
+
+jw-modal {
+  text-align: center;
+
+  .areas-list {
+    width: 90%;
+    margin: 20px auto;
+
+    display: flex;
+    flex-flow: row wrap;
+
+    .choice-group {
+      width: 130px;
+      margin: 10px 15px;
+
+      text-align: left;
+    }
+  }
+  .row-button {
+    text-align: center;
+
+    button {
+      padding: 7px 20px;
+
+      background-color: @background-color;
+
+      border: 1.5px solid @shadow-gray-color;
+      border-radius: 5px;
+
+      font-size: 15pt;
+    }
+
+    button:hover {
+      background-color: @shadow-gray-color;
+      color: @items-white-color;
+    }
+
+    button:disabled {
+      color: @disabled-color;
+      background-color: @items-white-color;
+
+      border: 1.5px solid @disabled-color;
+    }
+  }
+
 }
 

@@ -10,6 +10,7 @@ import { AddIncident, GetIncidents } from '../../store/actions/incident.actions'
 
 import { IncidentService } from '../../services/incident.service';
 import { ModalService } from '../../modal/_services';
+import { User } from '../../models/user.interface';
 
 @Component({
   selector: 'app-incidents',
@@ -17,7 +18,6 @@ import { ModalService } from '../../modal/_services';
   styleUrls: ['./incidents.component.less']
 })
 export class IncidentsComponent implements OnInit {
-
   constructor(private store: Store<AppState>, private router: Router,
               private incidentService: IncidentService, private modalService: ModalService) { }
   @Output()
@@ -25,7 +25,7 @@ export class IncidentsComponent implements OnInit {
 
   public users = this.store.pipe(select(selectUserList));
   public areas =  [
-    'Pressing', 'Welding', 'Galvanizing', 'Primer', 'Coloring', 'Assembling', 'Storage', 'Transporting'
+    'Pressing', 'Welding', 'Galvanizing', 'Primer', 'Coloring', 'Assembling', 'Storage', 'Transporting', 'IT'
   ];
   public priority = [
     'Blocker', 'Critical', 'Major', 'Normal', 'Minor'
@@ -35,9 +35,9 @@ export class IncidentsComponent implements OnInit {
   public dateNow: Date;
   public dueDate: Date;
   public selectedArea: string = undefined;
-  public selectedWorker: string = undefined;
+  public selectedWorker: User = undefined;
   public selectedPriority: string = undefined;
-  public description;
+  public description: string;
 
   public incidents = this.store.pipe(select(selectIncidentList));
 
@@ -56,15 +56,28 @@ export class IncidentsComponent implements OnInit {
     return this.dateNow.getTime() > new Date(this.dueDate).getTime();
   }
 
+  checkAssignee() {
+    if (this.selectedWorker === undefined || this.selectedArea === undefined) {
+      return true;
+    } else {
+      return this.selectedWorker.areas.indexOf(this.selectedArea) !== -1;
+    }
+  }
+
   openModal() {
     this.modalService.open('custom-modal-1');
   }
 
   addIncident() {
+    let worker;
+
+    if (this.selectedWorker !== undefined) {
+      worker = this.selectedWorker.username;
+    }
     const incident = {
       id: undefined,
       name: this.incidentName,
-      assignee: this.selectedWorker,
+      assignee: worker,
       area: this.selectedArea,
       startDate: this.dateNow,
       dueDate: new Date(this.dueDate),

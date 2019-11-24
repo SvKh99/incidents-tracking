@@ -2,6 +2,7 @@
 @items-white-color: white;
 @text-color: rgb(64, 68, 77);
 @background-color: rgba(241, 244, 255, 0.64);
+@disabled-color: rgba(169, 172, 182, 0.64);
 
 
 .content {
@@ -88,10 +89,13 @@
       .assignee-group, .status-group {
         margin: 10px 20px 10px 0;
 
-        select {
-          margin: 5px 10px;
+        label {
+          margin-right: 10px;
+        }
 
+        select {
           padding: 5px 7px;
+          margin: 10px 0;
 
           background-color: @background-color;
 
@@ -101,7 +105,8 @@
       }
 
       .save-button {
-        margin: auto 0 auto 10px;
+        margin: auto;
+        text-align: center;
 
         button {
           padding: 7px 20px;
@@ -116,6 +121,13 @@
         button:hover {
           background-color: @shadow-gray-color;
           color: @items-white-color;
+        }
+
+        button:disabled {
+          color: @disabled-color;
+          background-color: @items-white-color;
+
+          border: 1.5px solid @disabled-color;
         }
       }
     }

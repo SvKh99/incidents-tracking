@@ -1,4 +1,5 @@
 <div class="content">
+  <h2>Process</h2>
   <div class="status-table" *ngIf="statusNumbers !== undefined">
     <table>
       <thead>
@@ -15,43 +16,43 @@
           <td>1</td>
           <td><img src="../../../assets/images/Opened.png" width="18"/></td>
           <td>Opened</td>
-          <td>{{ statusNumbers.opened }}</td>
-          <td>2, 3</td>
+          <td><span>Incidents: </span>{{ statusNumbers.opened }}</td>
+          <td><span>Transference: </span>2, 3</td>
         </tr>
         <tr>
           <td>2</td>
           <td><img src="../../../assets/images/Needed-info.png" width="18"/></td>
           <td>Needed extra info</td>
-          <td>{{ statusNumbers.extraInfo }}</td>
-          <td>3</td>
+          <td><span>Incidents: </span>{{ statusNumbers.extraInfo }}</td>
+          <td><span>Transference: </span>3</td>
         </tr>
         <tr>
           <td>3</td>
           <td><img src="../../../assets/images/In-work.png" width="18"/></td>
           <td>In work</td>
-          <td>{{ statusNumbers.inWork }}</td>
-          <td>2, 4</td>
+          <td><span>Incidents: </span>{{ statusNumbers.inWork }}</td>
+          <td><span>Transference: </span>2, 4</td>
         </tr>
         <tr>
           <td>4</td>
           <td><img src="../../../assets/images/Closed.png" width="18"/></td>
           <td>Closed</td>
-          <td>{{ statusNumbers.closed }}</td>
-          <td>5, 6</td>
+          <td><span>Incidents: </span>{{ statusNumbers.closed }}</td>
+          <td><span>Transference: </span>5, 6</td>
         </tr>
         <tr>
           <td>5</td>
           <td><img src="../../../assets/images/Checked.png" width="18"/></td>
           <td>Checked</td>
-          <td>{{ statusNumbers.checked }}</td>
-          <td>Final</td>
+          <td><span>Incidents: </span>{{ statusNumbers.checked }}</td>
+          <td><span>Transference: </span>Final</td>
         </tr>
         <tr>
           <td>6</td>
           <td><img src="../../../assets/images/Defect.png" width="18"/></td>
           <td>Defect (reopened)</td>
-          <td>{{ statusNumbers.defect }}</td>
-          <td>2, 3</td>
+          <td><span>Incidents: </span>{{ statusNumbers.defect }}</td>
+          <td><span>Transference: </span>2, 3</td>
         </tr>
       </tbody>
     </table>

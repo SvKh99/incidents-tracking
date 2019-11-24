@@ -25,6 +25,7 @@ export class AddUser implements Action {
     password: string;
     birthday: string;
     position: string;
+    areas: Array<string>;
   };
 
   constructor(newUser) {

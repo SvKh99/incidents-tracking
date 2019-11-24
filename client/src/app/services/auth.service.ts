@@ -1,30 +1,45 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly handleError: HandleError;
-
-  constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
-    this.handleError = httpErrorHandler.createHandleError('HeroesService');
-  }
+  constructor(private http: HttpClient) { }
 
   static logout() {
-    localStorage.removeItem('access_token');
+    localStorage.clear();
   }
 
-  public login(username: string, password: string): Observable<{ error: string, token: string } | {
-    error: string, token: string }> {
-    return this.http.post<{ token: string,
-      error: string }>('/api/auth', { username, password })
-      .pipe(
-        catchError(this.handleError('login', { error: 'Connection error!', token: '' }))
+  public login(username: string, password: string): Observable<{ token: string, username: string, error: string }> {
+    return this.http.post<{ token: string, username: string, error: string
+    }>('/api/auth', { username, password });
+  }
+
+  public getNewToken() {
+    const activationTime = new Date();
+    const username = localStorage.getItem('username');
+
+    this.http.post<{ token: string, username: string, error: string
+    }>('/api/refreshToken', { username })
+      .pipe(first())
+      .subscribe(
+        result => {
+          localStorage.setItem('access_token', result.token);
+          localStorage.setItem('activation_time', String(activationTime));
+        },
+        err => {
+          console.log(err);
+        }
       );
+  }
+
+  public checkTokenExpiration() {
+    const activationTime = new Date(localStorage.getItem('activation_time'));
+
+    return (activationTime.getTime() +  2 * 60 * 60 * 1000 <= new Date().getTime());
   }
 
   public get loggedIn(): boolean {

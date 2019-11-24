@@ -15,8 +15,6 @@ import { appReducers } from './store/reducers/app.reducers';
 import { UserEffects } from './store/effects/user.effects';
 import { IncidentEffects } from './store/effects/incident.effects';
 
-import { HttpErrorHandler } from './services/http-error-handler.service';
-import { MessageService } from './services/message.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth.guard';
 import { UserService } from './services/user.service';
@@ -51,20 +49,18 @@ export function getToken() {
     HttpClientModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([UserEffects, IncidentEffects]),
-    StoreRouterConnectingModule.forRoot({stateKey: 'root'}),
+    StoreRouterConnectingModule.forRoot({ stateKey: 'root' }),
     JwtModule.forRoot({
       config: {
         tokenGetter: getToken,
         whitelistedDomains: ['localhost:4000'],
-        blacklistedRoutes: ['localhost:4000/api/auth']
+        blacklistedRoutes: ['localhost:4000/api/auth', 'localhost:4000/api/refreshToken']
       }
     }),
   ],
   providers: [
     AuthService,
     AuthGuard,
-    HttpErrorHandler,
-    MessageService,
     UserService,
     IncidentService,
   ],

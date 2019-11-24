@@ -14,11 +14,26 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
   constructor(private auth: AuthService, private router: Router, private store: Store<AppState>) { }
 
+  public menuShowed = false;
+
   ngOnInit() {
   }
 
   logout() {
     AuthService.logout();
+    this.menuShowed = false;
     this.router.navigate(['login']);
+  }
+
+  toIncidents() {
+    this.router.navigate(['incidents']);
+  }
+
+  showMenu() {
+    this.menuShowed = !this.menuShowed;
+  }
+
+  closeMenu() {
+    this.menuShowed = false;
   }
 }

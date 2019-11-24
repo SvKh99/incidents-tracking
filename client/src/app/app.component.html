@@ -1,19 +1,34 @@
 <div class="header">
-  <h1>Incident Tracker</h1>
+  <div class="main-header">
+    <h1 (click)="toIncidents()">Incident Tracker</h1>
+  </div>
 
   <div class="tabs" *ngIf="auth.loggedIn">
-    <a class="link" id="incidents" routerLink="incidents" routerLinkActive="active" *ngIf="auth.loggedIn">Incidents</a>
-    <a class="link" id="process" routerLink="process" routerLinkActive="active" *ngIf="auth.loggedIn">Process</a>
-    <a class="link" id="users" routerLink="users" routerLinkActive="active" *ngIf="auth.loggedIn">Users</a>
+    <a class="link" routerLink="incidents" routerLinkActive="active" *ngIf="auth.loggedIn">Incidents</a>
+    <a class="link" routerLink="process" routerLinkActive="active" *ngIf="auth.loggedIn">Process</a>
+    <a class="link" routerLink="users" routerLinkActive="active" *ngIf="auth.loggedIn">Users</a>
   </div>
 
-  <div class="pills">
-    <a class="link" (click)="logout()" routerLink="login" *ngIf="auth.loggedIn">Logout</a>
+  <div class="pills" *ngIf="auth.loggedIn">
+    <a class="link" (click)="logout()" routerLink="login">Logout</a>
   </div>
+
+  <div class="burger-menu-icon" *ngIf="auth.loggedIn">
+    <img src="../assets/images/burger.png" width="25" (click)="showMenu()">
+  </div>
+</div>
+
+<div class="menu" *ngIf="menuShowed">
+  <ul *ngIf="auth.loggedIn">
+    <li><a class="link" routerLink="incidents" routerLinkActive="active" (click)="closeMenu()">Incidents</a></li>
+    <li><a class="link" routerLink="process" routerLinkActive="active" (click)="closeMenu()">Process</a></li>
+    <li><a class="link" routerLink="users" routerLinkActive="active" (click)="closeMenu()">Users</a></li>
+    <li id="logout"><a class="link" (click)="logout()" routerLink="login"><u>Logout</u></a></li>
+  </ul>
 </div>
 
 <div class="space"></div>
 
-<div class="container-fluid">
+<div class="container-fluid" (click)="closeMenu()">
   <router-outlet></router-outlet>
 </div>

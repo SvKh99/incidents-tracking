@@ -24,7 +24,7 @@ function quickSearchByID(search, arr){
 }
 
 app.use(bodyParser.json());
-app.use(expressJwt({ secret: 'accessKey' }).unless({ path: ['/api/auth'] }));
+app.use(expressJwt({ secret: 'accessKey' }).unless({ path: ['/api/auth', '/api/refreshToken'] }));
 
 app.get('/', function (req, res) {
     res.send('Angular Netcracker App API Server')
@@ -42,9 +42,14 @@ app.post('/api/auth', (req, res) => {
         if (!user || md5(body.password) !== user.password) return res.send({ error: 'Could not authenticate: password is incorrect!' });
         let token = jwt.sign({ username: user.username }, 'accessKey', { expiresIn: '2h' });
 
-        res.send({ token });
+        res.send({ token, username: user.username });
     });
+});
 
+app.post('/api/refreshToken', (req, res) => {
+    let token = jwt.sign({ username: res.username }, 'accessKey', { expiresIn: '2h' });
+
+    res.send({ token });
 });
 
 app.get('/api/getUsers', (req, res) => {
@@ -72,7 +77,8 @@ app.post('/api/addUser', (req, res) => {
             username: newUser.username,
             password: md5(newUser.password),
             birthday: newUser.birthday,
-            position: newUser.position
+            position: newUser.position,
+            areas: newUser.areas
         };
 
         try {

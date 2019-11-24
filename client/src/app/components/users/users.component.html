@@ -1,4 +1,5 @@
 <div class="content">
+  <h2>Users</h2>
   <div class="users">
     <div class="table-content">
       <table>
@@ -22,7 +23,7 @@
     </div>
 
     <div class="add-user">
-      <form (ngSubmit)="add()">
+      <form>
         <h3>Add User</h3>
         <p *ngIf="error" id="connection-error">{{error}}</p>
         <div class="form-group">
@@ -38,9 +39,64 @@
           <input type="text" name="position" id="position-input" placeholder="Position" [(ngModel)]="position" />
         </div>
         <div class="submit-but">
-          <button [disabled]="!username || !password || !birthday || !position || !checkName() || !checkPassword()" type="submit">Add</button>
+          <button [disabled]="!username || !password || !birthday || !position || !checkName() || !checkPassword()" type="submit" (click)="openModal()">Add</button>
         </div>
       </form>
     </div>
   </div>
 </div>
+
+<jw-modal id="custom-modal-2">
+  <h3>Choose Area</h3>
+  <div class="areas-list">
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op1" value="Pressing" [(ngModel)]="Pressing"> Pressing
+      </label>
+    </div>
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op2" value="Welding" [(ngModel)]="Welding"> Welding
+      </label>
+    </div>
+    <div class="choice-group">
+        <label>
+          <input type="checkbox" name="op3" value="Galvanizing" [(ngModel)]="Galvanizing"> Galvanizing
+        </label>
+    </div>
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op4" value="Primer" [(ngModel)]="Primer"> Primer
+      </label>
+    </div>
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op5" value="Coloring" [(ngModel)]="Coloring"> Coloring
+      </label>
+    </div>
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op6" value="Assembling" [(ngModel)]="Assembling"> Assembling
+      </label>
+    </div>
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op7" value="Storage" [(ngModel)]="Storage"> Storage
+      </label>
+    </div>
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op8" value="Transporting" [(ngModel)]="Transporting"> Transporting
+      </label>
+    </div>
+    <div class="choice-group">
+      <label>
+        <input type="checkbox" name="op9" value="IT" [(ngModel)]="IT"> IT
+      </label>
+    </div>
+  </div>
+
+  <div class="row-button">
+    <button [disabled]="!Pressing && !Welding && !Galvanizing && !Primer && !Coloring && !Assembling && !Storage && !Transporting && !IT" type="submit" (click)="add()">OK</button>
+  </div>
+</jw-modal>

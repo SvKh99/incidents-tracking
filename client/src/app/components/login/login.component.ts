@@ -17,19 +17,24 @@ export class LoginComponent {
 
   public submit() {
     localStorage.setItem('error', '');
+
+    const activationTime = new Date();
+
     this.auth.login(this.username, this.password)
       .pipe(first())
       .subscribe(
          result => {
+           console.log(result);
            if (result.error) {
              this.error = result.error;
            } else if (result.token) {
              localStorage.setItem('access_token', result.token);
+             localStorage.setItem('activation_time', String(activationTime));
+             localStorage.setItem('username', result.username);
              this.router.navigate(['incidents']);
            }},
           err => {
            this.error = 'Connection error!';
-           console.log(err);
          }
       );
   }

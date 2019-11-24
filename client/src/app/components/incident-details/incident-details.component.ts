@@ -10,6 +10,7 @@ import { selectUserList } from '../../store/selectors/user.selector';
 import { GetUsers } from '../../store/actions/user.actions';
 
 import { IncidentService } from '../../services/incident.service';
+import { User } from '../../models/user.interface';
 
 @Component({
   selector: 'app-incident-details',
@@ -18,8 +19,8 @@ import { IncidentService } from '../../services/incident.service';
 })
 export class IncidentDetailsComponent implements OnInit {
   public incident: Incident;
-  public description: string;
-  public selectedWorker: string = undefined;
+  public description: string = undefined;
+  public selectedWorker: User = undefined;
   public selectedStatus: string = undefined;
 
   public status = {
@@ -42,8 +43,13 @@ export class IncidentDetailsComponent implements OnInit {
     this.store.pipe(select(selectSelectedIncident)).subscribe(res => {
       this.incident = res;
       this.description = res.description;
-      this.selectedWorker = res.assignee;
       this.selectedStatus = res.status;
+      this.selectedWorker = {
+        username: res.assignee,
+        birthday: undefined,
+        position: undefined,
+        areas: undefined
+      };
     });
     this.store.dispatch(new GetUsers());
   }
@@ -56,13 +62,21 @@ export class IncidentDetailsComponent implements OnInit {
     if (priority === 'Blocker') { return '#323232'; }
   }
 
+  checkAssignee() {
+    if (this.selectedWorker.areas === undefined || this.incident === undefined) {
+      return true;
+    } else {
+      return this.selectedWorker.areas.indexOf(this.incident.area) !== -1;
+    }
+  }
+
   editIncident() {
     if (this.description === this.incident.description && this.selectedStatus === this.incident.status
-      && this.selectedWorker === this.incident.assignee) {
+      && this.selectedWorker.username === this.incident.assignee) {
       return;
     } else {
       this.store.dispatch(new EditIncident(Number(this.route.snapshot.params.id), this.description,
-        this.selectedWorker, this.selectedStatus));
+        this.selectedWorker.username, this.selectedStatus));
     }
   }
 }

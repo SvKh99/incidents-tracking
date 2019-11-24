@@ -1,5 +1,5 @@
 <div class="content">
-  <div *ngIf="incident.name" class="incident-details">
+  <div *ngIf="incident !== undefined" class="incident-details">
     <div class="header">
       <img src="../../../assets/images/{{ selectedStatus.replace(' ', '-') }}.png"
            alt="{{ selectedStatus }}" width="25" />
@@ -17,17 +17,17 @@
       <textarea id="description" name="description" [(ngModel)]="description">{{ incident.description }}</textarea>
     </div>
     <div class="footer">
-      <div *ngIf="selectedWorker"><b>Assignee:</b><u>{{ selectedWorker }}</u></div>
-      <div *ngIf="selectedWorker" class="space"></div>
+      <div *ngIf="selectedWorker.username !== undefined && checkAssignee()"><b>Assignee:</b><u>{{ selectedWorker.username }}</u></div>
+      <div *ngIf="selectedWorker.username !== undefined && checkAssignee()" class="space"></div>
       <div class="priority" [style.border-color]="calculateColor(incident.priority)"
            [style.color]="calculateColor(incident.priority)">{{ incident.priority }}</div>
     </div>
     <div class="edit-incident">
-      <div *ngIf="!incident.assignee" class="assignee-group">
+      <div *ngIf="incident.assignee === undefined" class="assignee-group">
         <label for="assignee">Set assignee: </label>
         <select id="assignee" class="half-select" name="selectedWorker" [(ngModel)]="selectedWorker">
           <option disabled selected hidden value="undefined">Select Worker</option>
-          <option *ngFor="let worker of users" [ngValue]="worker.username">{{ worker.username }}</option>
+          <option *ngFor="let worker of users | async" [ngValue]="worker">{{ worker.username }}</option>
         </select>
       </div>
       <div class="status-group" *ngIf="incident.status !== 'Checked'">
@@ -38,7 +38,7 @@
         </select>
       </div>
       <div class="save-button" *ngIf="incident.status !== 'Checked' || !incident.assignee">
-        <button (click)="editIncident()">Save changes</button>
+        <button [disabled]="!checkAssignee()" (click)="editIncident()">Save changes</button>
       </div>
     </div>
   </div>

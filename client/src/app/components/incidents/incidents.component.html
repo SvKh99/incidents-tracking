@@ -1,5 +1,6 @@
 <div class="content">
   <div class="incidents-list">
+    <h2>Incidents</h2>
     <button class="add-incident" (click)="openModal()">Add incident</button>
     <table>
       <thead>
@@ -16,11 +17,12 @@
         <tr *ngFor="let incident of incidents | async"
             (click)="navigateToIncident(incident.id)">
           <td class="first-column"><img src="../../../assets/images/{{ incident.status.replace(' ', '-') }}.png" alt="{{ incident.status }}" width="18"/></td>
-          <td id="second-td">{{ incident.name }}</td>
+          <td class="second-column">{{ incident.name }}</td>
           <td>{{ incident.assignee || "—" }}</td>
-          <td>{{ incidentService.formatDate(incident.startDate) }}</td>
-          <td>{{ incidentService.formatDate(incident.dueDate) }}</td>
+          <td><span><b>Start Date: </b></span>{{ incidentService.formatDate(incident.startDate) }}</td>
+          <td><span><b>Due Date: </b></span>{{ incidentService.formatDate(incident.dueDate) }}</td>
           <td>{{ incident.status }}</td>
+          <td class="hidden-column"><img src="../../../assets/images/{{ incident.status.replace(' ', '-') }}.png" alt="{{ incident.status }}" width="18"/></td>
         </tr>
       </tbody>
     </table>
@@ -28,11 +30,12 @@
 </div>
 
 <jw-modal id="custom-modal-1">
-  <form (ngSubmit)="addIncident()">
+  <form (ngSubmit)="addIncident()" class="full-window-form">
     <h3>Add Incident</h3>
 
     <div class="error-div">
-      <p *ngIf="checkDueDate()" id="error">Due Date must be greater than today!</p>
+      <p *ngIf="checkDueDate()" class="error">Due Date must be greater than today!</p>
+      <p *ngIf="!checkAssignee()" class="error">Chosen Area must coincide with selected Worker area!</p>
     </div>
     <div class="row">
       <div class="labels" id="name-input-group">
@@ -47,22 +50,19 @@
     </div>
 
     <div class="row">
-      <label for="area"></label>
-      <select id="area" class="half-select"  name="selectedArea" [(ngModel)]="selectedArea">
+      <select id="area" class="half"  name="selectedArea" [(ngModel)]="selectedArea">
         <option disabled selected hidden value="undefined">Area</option>
         <option *ngFor="let area of areas" [ngValue]="area">{{ area }}</option>
       </select>
 
-      <label for="assignee"></label>
-      <select id="assignee" class="half-select" name="selectedWorker" [(ngModel)]="selectedWorker">
+      <select id="assignee" class="half" name="selectedWorker" [(ngModel)]="selectedWorker">
         <option disabled selected hidden value="undefined">Assignee</option>
-        <option *ngFor="let worker of users" [ngValue]="worker.username">{{ worker.username }}</option>
+        <option *ngFor="let worker of users | async" [ngValue]="worker">{{ worker.username }}</option>
       </select>
     </div>
 
     <div class="row">
-      <label for="priority"></label>
-      <select id="priority" class="full-select" name="selectedPriority" [(ngModel)]="selectedPriority">
+      <select id="priority" class="full" name="selectedPriority" [(ngModel)]="selectedPriority">
         <option disabled hidden value="undefined">Priority</option>
         <option *ngFor="let pr of priority" [ngValue]="pr">{{ pr }}</option>
       </select>
@@ -72,7 +72,50 @@
       <textarea id="description" class="full" name="description" [(ngModel)]="description"></textarea>
     </div>
     <div class="row-button">
-      <button [disabled]="!incidentName || !dueDate || !selectedArea || !selectedPriority || !description || checkDueDate()" type="submit">Add</button>
+      <button [disabled]="!incidentName || !dueDate || !selectedArea || !selectedPriority || !description || checkDueDate() || !checkAssignee()" type="submit">Add</button>
     </div>
+  </form>
+
+  <form (ngSubmit)="addIncident()" class="mobile-window-form">
+    <div class="error-div">
+      <p *ngIf="checkDueDate()" class="error">Due Date must be greater than today!</p>
+      <p *ngIf="!checkAssignee()" class="error">Chosen Area must coincide with selected Worker area!</p>
+    </div>
+    <div class="row">
+      <label for="name-mobile">Incident Name</label>
+      <input id="name-mobile" type="text" name="incidentName" [(ngModel)]="incidentName"/>
+
+      <label for="date">Due Date</label>
+      <input id="date-mobile" type="date" name="dueDate" [(ngModel)]="dueDate"/>
+    </div>
+
+    <div class="row">
+      <select id="area-mobile"  name="selectedArea" [(ngModel)]="selectedArea">
+        <option disabled selected hidden value="undefined">Area</option>
+        <option *ngFor="let area of areas" [ngValue]="area">{{ area }}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <select id="assignee-mobile" class="half-select" name="selectedWorker" [(ngModel)]="selectedWorker">
+        <option disabled selected hidden value="undefined">Assignee</option>
+        <option *ngFor="let worker of users | async" [ngValue]="worker">{{ worker.username }}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <select id="priority-mobile" class="full-select" name="selectedPriority" [(ngModel)]="selectedPriority">
+        <option disabled hidden value="undefined">Priority</option>
+        <option *ngFor="let pr of priority" [ngValue]="pr">{{ pr }}</option>
+      </select>
+    </div>
+    <div class="row">
+      <label for="description" class="not-empty-label">Description</label>
+      <textarea id="description-mobile" class="full" name="description" [(ngModel)]="description"></textarea>
+    </div>
+    <div class="row-button">
+      <button [disabled]="!incidentName || !dueDate || !selectedArea || !selectedPriority || !description || checkDueDate() || !checkAssignee()" type="submit">Add</button>
+    </div>
+
   </form>
 </jw-modal>
